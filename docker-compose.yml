@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: ./golang
+    ports:
+      - "8081:8080"
+    tty: true
+    stdin_open: true
+    # command: go run main.go
+    volumes:
+      - ./golang:/go/src
+    # environment:
+    # TZ: Asia/Tokyo
+    # FRONTEND_URL: http://localhost:5173
+    # MYSQL_DATABASE: study_app_db
+    # MYSQL_ROOT_USER: root
+    # MYSQL_ROOT_PASSWORD: password
+    depends_on:
+      - db
