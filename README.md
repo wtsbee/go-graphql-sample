@@ -37,3 +37,9 @@ driver のインストール(今回は MySQL)
 ```
 $ go install github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql@latest
 ```
+
+ORM コードの自動生成
+
+```
+sqlboiler mysql
+```
