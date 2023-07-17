@@ -43,3 +43,9 @@ ORM コードの自動生成
 ```
 sqlboiler mysql
 ```
+
+`schema.graphqls`スキーマの内容に沿ったコードの自動生成
+
+```
+gqlgen generate
+```
