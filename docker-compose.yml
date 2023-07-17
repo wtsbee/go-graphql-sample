@@ -8,7 +8,6 @@ services:
       - "8081:8080"
     tty: true
     stdin_open: true
-    # command: go run main.go
     volumes:
       - ./golang:/go/src
     environment:
@@ -19,6 +18,7 @@ services:
       - db
   db:
     image: mysql:8.0
+    container_name: dockerMySQL
     environment:
       MYSQL_DATABASE: mygraphql
       MYSQL_ROOT_USER: root

@@ -17,9 +17,23 @@ $ gqlgen init
 GraphQL サーバーの起動
 
 ```
-go run ./server.go
+$ go run ./server.go
 ```
 
 Playground へのアクセス
 
-`http://localhost:8081/`
+```
+http://localhost:8081/
+```
+
+slqboiler のインストール
+
+```
+$ go install github.com/volatiletech/sqlboiler/v4@latest
+```
+
+driver のインストール(今回は MySQL)
+
+```
+$ go install github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql@latest
+```
