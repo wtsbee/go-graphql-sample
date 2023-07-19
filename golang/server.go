@@ -11,6 +11,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -34,6 +35,9 @@ func main() {
 	srv := handler.NewDefaultServer(internal.NewExecutableSchema(internal.Config{Resolvers: &graph.Resolver{
 		Srv: service,
 	}}))
+
+	// SQLBoilerによって発行されるSQLクエリをログ出力させるデバッグオプション
+	boil.DebugMode = true
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
