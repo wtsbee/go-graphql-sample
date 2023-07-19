@@ -23,7 +23,7 @@ func main() {
 		port = defaultPort
 	}
 
-	db, err := sql.Open("mysql", "root:password@tcp(dockerMySQL:3306)/mygraphql")
+	db, err := sql.Open("mysql", "root:password@tcp(dockerMySQL:3306)/mygraphql?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}
