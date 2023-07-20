@@ -6,14 +6,16 @@ package graph
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"my_gql_server/graph/model"
 	"my_gql_server/internal"
+	"strings"
 )
 
 // Author is the resolver for the author field.
 func (r *issueResolver) Author(ctx context.Context, obj *model.Issue) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: Author - author"))
+	return r.Srv.GetUserByID(ctx, obj.Author.ID)
 }
 
 // Repository is the resolver for the repository field.
@@ -72,7 +74,23 @@ func (r *queryResolver) User(ctx context.Context, name string) (*model.User, err
 
 // Node is the resolver for the node field.
 func (r *queryResolver) Node(ctx context.Context, id string) (model.Node, error) {
-	panic(fmt.Errorf("not implemented: Node - node"))
+	nElems := strings.SplitN(id, "_", 2)
+	nType, _ := nElems[0], nElems[1]
+
+	switch nType {
+	case "U":
+		return r.Srv.GetUserByID(ctx, id)
+	case "REPO":
+		return r.Srv.GetRepoByID(ctx, id)
+	case "ISSUE":
+		return r.Srv.GetIssueByID(ctx, id)
+	case "PJ":
+		return r.Srv.GetProjectByID(ctx, id)
+	case "PR":
+		return r.Srv.GetPullRequestByID(ctx, id)
+	default:
+		return nil, errors.New("invalid ID")
+	}
 }
 
 // Owner is the resolver for the owner field.
@@ -87,7 +105,7 @@ func (r *repositoryResolver) Issue(ctx context.Context, obj *model.Repository, n
 
 // Issues is the resolver for the issues field.
 func (r *repositoryResolver) Issues(ctx context.Context, obj *model.Repository, after *string, before *string, first *int, last *int) (*model.IssueConnection, error) {
-	panic(fmt.Errorf("not implemented: Issues - issues"))
+	return r.Srv.ListIssueInRepository(ctx, obj.ID, after, before, first, last)
 }
 
 // PullRequest is the resolver for the pullRequest field.
