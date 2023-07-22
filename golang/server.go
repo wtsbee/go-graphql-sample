@@ -33,10 +33,13 @@ func main() {
 
 	service := services.New(db)
 
-	srv := handler.NewDefaultServer(internal.NewExecutableSchema(internal.Config{Resolvers: &graph.Resolver{
-		Srv:     service,
-		Loaders: graph.NewLoaders(service),
-	}}))
+	srv := handler.NewDefaultServer(internal.NewExecutableSchema(internal.Config{
+		Resolvers: &graph.Resolver{
+			Srv:     service,
+			Loaders: graph.NewLoaders(service),
+		},
+		Directives: graph.Directive,
+	}))
 
 	// SQLBoilerによって発行されるSQLクエリをログ出力させるデバッグオプション
 	boil.DebugMode = true
