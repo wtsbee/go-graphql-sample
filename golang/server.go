@@ -6,6 +6,7 @@ import (
 	"my_gql_server/graph"
 	"my_gql_server/graph/services"
 	"my_gql_server/internal"
+	"my_gql_server/middlewares/auth"
 	"net/http"
 	"os"
 
@@ -41,7 +42,7 @@ func main() {
 	boil.DebugMode = true
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
+	http.Handle("/query", auth.AuthMiddleware(srv))
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
