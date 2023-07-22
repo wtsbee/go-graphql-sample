@@ -39,6 +39,7 @@ type PullRequestService interface {
 type ProjectService interface {
 	GetProjectByID(ctx context.Context, id string) (*model.ProjectV2, error)
 	GetProjectByOwnerAndNumber(ctx context.Context, ownerID string, number int) (*model.ProjectV2, error)
+	ListProjectByOwner(ctx context.Context, ownerID string, after *string, before *string, first *int, last *int) (*model.ProjectV2Connection, error)
 }
 
 type services struct {
