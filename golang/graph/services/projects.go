@@ -8,6 +8,7 @@ import (
 	"my_gql_server/graph/model"
 
 	"github.com/volatiletech/sqlboiler/v4/boil"
+	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 )
 
 type projectService struct {
@@ -37,6 +38,24 @@ func (p *projectService) GetProjectByID(ctx context.Context, id string) (*model.
 		db.ProjectColumns.URL,
 		db.ProjectColumns.Owner,
 	)
+	if err != nil {
+		return nil, err
+	}
+	return convertProjectV2(project), nil
+}
+
+func (p *projectService) GetProjectByOwnerAndNumber(ctx context.Context, ownerID string, number int) (*model.ProjectV2, error) {
+	project, err := db.Projects(
+		qm.Select(
+			db.ProjectColumns.ID,
+			db.ProjectColumns.Title,
+			db.ProjectColumns.Number,
+			db.ProjectColumns.URL,
+			db.ProjectColumns.Owner,
+		),
+		db.ProjectWhere.Owner.EQ(ownerID),
+		db.ProjectWhere.Number.EQ(int(number)),
+	).One(ctx, p.exec)
 	if err != nil {
 		return nil, err
 	}
