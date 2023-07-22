@@ -49,3 +49,9 @@ sqlboiler mysql
 ```
 gqlgen generate
 ```
+
+DataLoader のインストール
+
+```
+$ go get -u github.com/graph-gophers/dataloader
+```

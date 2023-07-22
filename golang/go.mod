@@ -6,6 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.35
 	github.com/friendsofgo/errors v0.9.2
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/graph-gophers/dataloader/v7 v7.1.0
 	github.com/vektah/gqlparser/v2 v2.5.7
 	github.com/volatiletech/null/v8 v8.1.2
 	github.com/volatiletech/sqlboiler/v4 v4.14.2

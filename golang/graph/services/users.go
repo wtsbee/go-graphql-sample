@@ -20,6 +20,14 @@ func convertUser(user *db.User) *model.User {
 	}
 }
 
+func convertUserSlice(users db.UserSlice) []*model.User {
+	result := make([]*model.User, 0, len(users))
+	for _, user := range users {
+		result = append(result, convertUser(user))
+	}
+	return result
+}
+
 func (u *userService) GetUserByID(ctx context.Context, id string) (*model.User, error) {
 	user, err := db.FindUser(ctx, u.exec, id,
 		db.UserTableColumns.ID, db.UserTableColumns.Name,
@@ -40,4 +48,16 @@ func (u *userService) GetUserByName(ctx context.Context, name string) (*model.Us
 		return nil, err
 	}
 	return convertUser(user), nil
+}
+
+// サービス層内に実装された、IN句を用いた取得処理
+func (u *userService) ListUsersByID(ctx context.Context, IDs []string) ([]*model.User, error) {
+	users, err := db.Users(
+		qm.Select(db.UserTableColumns.ID, db.UserTableColumns.Name),
+		db.UserWhere.ID.IN(IDs),
+	).All(ctx, u.exec)
+	if err != nil {
+		return nil, err
+	}
+	return convertUserSlice(users), nil
 }
